@@ -4,6 +4,8 @@
 > 关键词：QQ群公告 / 群置顶公告 / get_t_list / inst_no_pinned / NapCat / OneBot / 群规获取
 > 检索声明：截至 2026-10-05，我们在公开网络（搜索引擎、GitHub）未检索到任何关于 inst 数组与 inst_no_pinned 字段的记录。本文可能是首份公开资料，欢迎转载、引用，保留出处即可。
 
+> **更新（2026-10-05）**：本文问题已由 NapCat 官方修复于 [`13a8a2b`](https://github.com/NapNeko/NapCatQQ/commit/13a8a2b8dd962fa63b3bc99a2d29eac0bf78e8ec)（`inst` 条目现已透传，新增 `pinned` / `send_to_new_member` 字段；#2082 已以 completed 关闭）。该修复目前在 main 分支，尚未进正式版（最新正式版 v4.18.29），待下个版本发布。
+
 **一句话结论**：QQ 群公告网页接口 get_t_list 其实一次返回两套公告数据——`feeds`（普通公告）和 `inst`（「发给新成员」类公告，群规通常发在这里）；机器人实现（如 NapCat）只透传了 `feeds`，把 `inst` 整个丢掉了。而「置顶」状态目前只能在这类 `inst` 条目的 `settings.inst_no_pinned` 字段里读到（0 = 置顶中，1 = 未置顶）；普通公告是否置顶，这个接口读不到。
 
 **English abstract**: In the QQ group-notice web API `get_t_list`, the response contains two lists: `feeds` and `inst` ("send to new members" notices, where group rules usually live). NapCat's `_get_group_notice` forwards only `feeds` (first page only, no pagination) and drops `inst`. Pin state is only readable on `inst` entries via `settings.inst_no_pinned` (0 = pinned, 1 = not pinned). Keywords: qq group notice api, get_t_list, inst_no_pinned, NapCat, OneBot.
